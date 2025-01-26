@@ -15,12 +15,13 @@ namespace App\Services\Comments;
 
 class MarkdownBuilder
 {
+    private string $environmentUrl;
+
     public function prepareBody(array $rows): string
     {
-        $environmentUrl = '';
         foreach ($rows as $row) {
             if ($row['name'] === 'Environment Url') {
-                $environmentUrl = $row['content'];
+                $this->environmentUrl = $row['content'];
                 break;
             }
         }
@@ -43,7 +44,7 @@ class MarkdownBuilder
     {
 
         return "# Harbor Preview Environment Details
-Hello! Here are the details of the [PR preview]($environmentUrl) environment:
+Hello! Here are the details of the [PR preview]($this->environmentUrl) environment:
 
 | Service     | Location                |
 |-------------|-------------------------|\n"
